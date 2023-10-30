@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ol class="breadcrumb mb-4 mt-4 ">
+    <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
+    <li class="breadcrumb-item active">Usuarios</li>
+</ol>
+
+<div class="card">
+    <div class="card-header">
+
+        <i class=" fas fa-users me-1">  </i> listas de Usuarios
+    </div>
+
+    <div class="card-body">
+        <div>
+            <div class=" row ">
+                <div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success"> crear nuevo </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <table id="tabla" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th> < Nombres ></th>
+                    <th> < Apllidos ></th>
+                   @* <th> < Correo ></th>
+                    <th> < Activo ></th>*@
+
+                </tr>
+            </thead>
+        </table>
+
+
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+       var tablaData;
+
+
+        jQuery.ajax({
+            url:'@Url.Action("listarUsuarios","Home")',
+            type:"GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+               console.log(data)
+            }
+        })
+
+       tablaData = $("#tabla").DataTable({
+           responsive: true,
+           ordering: false,
+           "ajax": {
+                url:'@Url.Action("listarUsuarios","Home")',
+                type:"GET",
+                dataType: "json",
+           },
+
+           "columns" : [
+               { "data": "Nombres" },
+               { "data": "Apellidos" }
+               @*{ "data": "Correo" },
+               { "data": "Activo" }*@
+           ]
+
+
+
+       });
+
+
+
+
+    </script>
+  }
